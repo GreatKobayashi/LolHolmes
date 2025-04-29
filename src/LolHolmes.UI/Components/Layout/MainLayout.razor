@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <main>
+        <ErrorBoundary>
+            <ChildContent>
+                <div class="fixed-top">
+                </div>
+                <article class="content">
+                    @Body
+                </article>
+            </ChildContent>
+            <ErrorContent>
+                <p class="text-danger">システムエラーが発生</p>
+                <p>@context.Message</p>
+            </ErrorContent>
+        </ErrorBoundary>
+    </main>
+</div>
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
