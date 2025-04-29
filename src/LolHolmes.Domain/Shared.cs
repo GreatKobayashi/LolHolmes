@@ -2,7 +2,7 @@
 {
     public static class Shared
     {
-        public static bool IsFake { get; } = true;
-        public static string ApiKey { get; } = "RGAPI-0008b233-6c59-4807-a574-7c8bb851ff00";
+        public static bool IsFake { get; } = false;
+        public static string ApiKey { get; } = "RGAPI-21a9ec2b-d75a-47a1-aa07-86855bd380f9";
     }
 }

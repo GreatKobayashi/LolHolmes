@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <main>
+<div class="page d-flex justify-content-center">
+    <main class="col-md-6">
         <ErrorBoundary>
             <ChildContent>
                 <div class="fixed-top">
@@ -16,9 +16,4 @@
             </ErrorContent>
         </ErrorBoundary>
     </main>
-</div>
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
 </div>

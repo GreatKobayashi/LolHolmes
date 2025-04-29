@@ -2,12 +2,14 @@
 {
     public class NameEntity
     {
-        public string Value { get; private set; }
+        public string RiotId { get; private set; }
+        public string TagLine { get; private set; }
         public DateTime TimeStamp { get; private set; }
 
-        public NameEntity(string value, DateTime timeStamp)
+        public NameEntity(string riotId, string tagLine, DateTime timeStamp)
         {
-            Value = value;
+            RiotId = riotId;
+            TagLine = tagLine;
             TimeStamp = timeStamp;
         }
     }

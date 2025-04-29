@@ -1,0 +1,49 @@
+﻿@page "/"
+@inject HomeViewModel _homeViewModel;
+
+<PageTitle>Home</PageTitle>
+
+<h1>LoLホームズ</h1>
+
+<NameInput @ref="_nameInput" />
+<Button Class="btn-primary" OnClick="LoadAccountEntity">アカウントチェック</Button>
+
+@if (_homeViewModel.Acocunt != null)
+{
+    <p>ID: @_homeViewModel.Acocunt.CurrentRiotId</p>
+    <p>TagLine: @_homeViewModel.Acocunt.CurrentTagLine</p>
+    <p>Level: @_homeViewModel.Acocunt.Level</p>
+
+    <Button Class="btn-primary" OnClick="StartSerching">調査開始</Button>
+}
+
+@if (_homeViewModel.Names.Count > 0)
+{
+    <p>過去の名前</p>
+    <ul>
+        @foreach (var name in _homeViewModel.Names)
+        {
+            <li>@name.RiotId #@name.TagLine</li>
+        }
+    </ul>
+}
+
+@code {
+    private NameInput? _nameInput;
+
+    protected override void OnInitialized()
+    {
+        _homeViewModel.Names.StateHasChanged = StateHasChanged;
+    }
+
+    private async Task LoadAccountEntity()
+    {
+        var inputs = _nameInput?.GetInputs() ?? ("", "");
+        await _homeViewModel.LoadAccount(inputs.Item1, inputs.Item2);
+    }
+
+    private void StartSerching()
+    {
+        _homeViewModel.SerchPriviousName();
+    }
+}

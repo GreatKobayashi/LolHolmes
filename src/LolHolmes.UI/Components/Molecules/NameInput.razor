@@ -1,0 +1,18 @@
+﻿@using LolHolmes.UI.Components.Atoms
+
+<div class="input-group m-3">
+    <InputField PlaceHolder="RiotID" @ref="_riotIdInputField" />
+    <span class="input-group-text">#</span>
+    <InputField PlaceHolder="Tag Line" @ref="_tagLineInputField" />
+</div>
+
+
+@code {
+    private InputField? _riotIdInputField;
+    private InputField? _tagLineInputField;
+
+    public (string, string) GetInputs()
+    {
+        return (_riotIdInputField?.GetInput() ?? "", _tagLineInputField?.GetInput() ?? "");
+    }
+}

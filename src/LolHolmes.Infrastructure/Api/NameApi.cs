@@ -21,10 +21,10 @@ namespace LolHolmes.Infrastructure.Api
 
             var matchInfo = await Api.Match.GetInfoAsync(region, matchIds.Last());
 
-            var priviousName = matchInfo.Info.Participants.First(x => x.Puuid == account.PuuId).RiotIdGameName;
+            var matchedParticipant = matchInfo.Info.Participants.First(x => x.Puuid == account.PuuId);
             var timeStamp = _unixEpoch.AddSeconds(matchInfo.Info.GameStartTimestamp / 1000).ToLocalTime();
 
-            return new NameEntity(priviousName, timeStamp);
+            return new NameEntity(matchedParticipant.RiotIdGameName, matchedParticipant.RiotIdTagline, timeStamp);
         }
     }
 }

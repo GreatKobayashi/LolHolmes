@@ -1,6 +1,7 @@
 using LolHolmes.Domain;
 using LolHolmes.Infrastructure;
 using LolHolmes.UI.Pages;
+using LolHolmes.UI.Pages.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddSingleton(_ => Factories.CreateAccountRepository(Shared.ApiKey));
+builder.Services.AddSingleton(_ => Factories.CreateNameRepository(Shared.ApiKey));
+
+builder.Services.AddTransient<HomeViewModel>();
 
 var app = builder.Build();
 
