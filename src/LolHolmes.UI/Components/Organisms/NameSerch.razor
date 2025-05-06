@@ -1,0 +1,28 @@
+﻿@inject HomeViewModel _homeViewModel;
+
+
+<Button Class="btn-primary" OnClick="Search">調査開始</Button>
+<p>過去の名前</p>
+<ul>
+    @foreach (var name in _homeViewModel.Names)
+    {
+        <li>@name.RiotId #@name.TagLine</li>
+    }
+</ul>
+<Spinner IsVisible="_isLoading" />
+
+@code {
+    private bool _isLoading = false;
+
+    protected override void OnInitialized()
+    {
+        _homeViewModel.Names.StateHasChanged = StateHasChanged;
+    }
+
+    private async Task Search()
+    {
+        _isLoading = true;
+        await _homeViewModel.SerchPriviousName();
+        _isLoading = false;
+    }
+}

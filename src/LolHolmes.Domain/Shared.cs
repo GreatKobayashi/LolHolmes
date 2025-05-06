@@ -3,6 +3,6 @@
     public static class Shared
     {
         public static bool IsFake { get; } = false;
-        public static string ApiKey { get; } = "RGAPI-21a9ec2b-d75a-47a1-aa07-86855bd380f9";
+        public static string ApiKey { get; } = "RGAPI-78dc3bf1-e6da-41f0-bb9c-4ec8584f769a";
     }
 }

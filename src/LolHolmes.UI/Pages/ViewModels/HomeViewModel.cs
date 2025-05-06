@@ -1,20 +1,21 @@
-﻿using LolHolmes.Domain.Entities;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using LolHolmes.Domain.Entities;
 using LolHolmes.Domain.Enums;
 using LolHolmes.Domain.Logics;
 using LolHolmes.Domain.Repositories;
 
 namespace LolHolmes.UI.Pages.ViewModels
 {
-    public class HomeViewModel
+    public partial class HomeViewModel : ObservableObject
     {
-        public AccountEntity? Acocunt { get; private set; }
+        [ObservableProperty]
+        public partial AccountEntity? Account { get; private set; }
         public ReactiveList<NameEntity> Names { get; private set; } = new();
 
         private readonly IAccountRepository _accountRepository;
         private readonly INameRepository _nameRepository;
 
-        private readonly int _maxGoBackCount = 500;
-        private readonly int _betweens = 20;
+        private readonly int _maxPages = 5;
 
         public HomeViewModel(IAccountRepository accountRepository, INameRepository nameRepository)
         {
@@ -24,21 +25,24 @@ namespace LolHolmes.UI.Pages.ViewModels
 
         public async Task LoadAccount(string riotId, string tagLine)
         {
-            Acocunt = await _accountRepository.GetEntity(Server.Japan, riotId, tagLine);
+            Account = await _accountRepository.GetEntity(Server.Japan, riotId, tagLine);
         }
 
         public async Task SerchPriviousName()
         {
-            var goBackCount = 0;
+            var page = 1;
 
-            while (goBackCount < _maxGoBackCount)
+            while (page <= _maxPages)
             {
-                var gotName = await _nameRepository.GetLastEntity(Acocunt!, goBackCount, _betweens);
-                if (Names.Find(x => x.RiotId == gotName.RiotId) == null)
+                var gotNames = await _nameRepository.GetEntities(Account!, page);
+                foreach (var entity in gotNames)
                 {
-                    Names.Add(gotName);
+                    if (Names.Find(x => x.RiotId == entity.RiotId) == null)
+                    {
+                        Names.Add(entity);
+                    }
                 }
-                goBackCount += _betweens;
+                page++;
             }
         }
     }

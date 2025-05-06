@@ -1,0 +1,10 @@
+﻿@using LolHolmes.Domain.Entities
+
+<p>ID: @Value.CurrentRiotId</p>
+<p>TagLine: @Value.CurrentTagLine</p>
+<p>Level: @Value.Level</p>
+
+@code {
+    [Parameter]
+    public required AccountEntity Value { get; set; }
+}

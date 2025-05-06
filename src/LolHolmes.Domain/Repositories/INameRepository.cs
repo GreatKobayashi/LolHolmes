@@ -4,6 +4,6 @@ namespace LolHolmes.Domain.Repositories
 {
     public interface INameRepository
     {
-        public Task<NameEntity> GetLastEntity(AccountEntity account, int start, int count);
+        public Task<List<NameEntity>> GetEntities(AccountEntity account, int page);
     }
 }
