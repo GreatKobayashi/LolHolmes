@@ -20,6 +20,5 @@ namespace LolHolmes.Domain.Entities
         public string CurrentTagLine { get; private set; }
         public int Level { get; private set; }
         public int ProfileIcon { get; private set; }
-        public bool IsConfirmed { get; private set; } = false;
     }
 }
