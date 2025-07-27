@@ -8,13 +8,16 @@ namespace LolHolmes.Infrastructure.Fake
     {
         public Task<AccountEntity> GetEntity(Server server, string riotId, string tagLine)
         {
+            var rank = new RankEntity(Tier.Iron, 2, 2, 11, 11);
             return Task.FromResult(new AccountEntity(
                 "vqIB5nx38QS7322H34nNgvaY-eBRxjm94aaDfQdlX2UGSv_qTTmjwLhy3Er2VxrNS1Rt8OmI5iONRQ",
                 Server.Japan,
                 "裸だったら何が悪い",
                 "5444",
                 458,
-                1153));
+                1153,
+                rank,
+                rank));
         }
     }
 }

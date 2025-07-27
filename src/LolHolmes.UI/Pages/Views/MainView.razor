@@ -1,0 +1,20 @@
+﻿@page "/"
+@using System.ComponentModel
+@using LolHolmes.Domain.Entities
+@inject MainViewModel _homeViewModel;
+
+<PageTitle>Home</PageTitle>
+
+<MainTitle />
+
+<AccountSearch @bind-Account="_account" />
+
+@if (_account != null)
+{
+    <AccountData Account="_account" />
+    <NameSearch Account=_account />
+}
+
+@code {
+    private AccountEntity? _account;
+}

@@ -1,0 +1,16 @@
+﻿@using LolHolmes.Domain.Repositories;
+@inject IImageRepository _imageRepository;
+
+<ImageBase Url="@_url" Class="img-thumbnail" />
+
+@code {
+    private string? _url;
+
+    [Parameter]
+    public int IconId { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _url = _imageRepository.GetSummonerIcon(IconId).Url;
+    }
+}

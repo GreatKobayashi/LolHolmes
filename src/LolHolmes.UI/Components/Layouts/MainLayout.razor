@@ -1,19 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page d-flex justify-content-center">
-    <main class="col-md-6">
-        <ErrorBoundary>
-            <ChildContent>
-                <div class="fixed-top">
-                </div>
-                <article class="content">
-                    @Body
-                </article>
-            </ChildContent>
-            <ErrorContent>
-                <p class="text-danger">システムエラーが発生</p>
-                <p>@context.Message</p>
-            </ErrorContent>
-        </ErrorBoundary>
-    </main>
+    <ErrorBoundary>
+        <ChildContent>
+            <div class="fixed-top">
+            </div>
+            <article class="content">
+                @Body
+            </article>
+        </ChildContent>
+        <ErrorContent>
+            <p class="text-danger">システムエラーが発生</p>
+            <p>@context.Message</p>
+        </ErrorContent>
+    </ErrorBoundary>
 </div>

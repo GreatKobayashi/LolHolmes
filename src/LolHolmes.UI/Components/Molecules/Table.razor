@@ -1,0 +1,48 @@
+﻿
+<table class="table table-borderless table-sm">
+    @if (Header is not null)
+    {
+        <thead>
+            <tr>
+                @foreach (var col in Header)
+                {
+                    <th scope="col">@col</th>
+                }
+            </tr>
+        </thead>
+    }
+
+    <tbody>
+        @for (var i = 0; i < Data.GetLength(0); i++)
+        {
+            <tr>
+                @for (var j = 0; j < Data.GetLength(1); j++)
+                {
+                    var value = Data[i, j] ?? "";
+                    var scope = j == 0 ? "row" : string.Empty;
+                    @if (BoldFirstColInEachRow && j == 0)
+                    {
+                        <th scope="@scope">
+                            <Label>@value</Label>
+                        </th>
+                    }
+                    else
+                    {
+                        <td scope="@scope">
+                            <Label>@value</Label>
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public required string[,] Data { get; set; }
+    [Parameter]
+    public string[]? Header { get; set; }
+    [Parameter]
+    public bool BoldFirstColInEachRow { get; set; }
+}

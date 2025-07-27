@@ -1,0 +1,11 @@
+﻿
+<img src="@Url" class="w-100 h-100 @Class" alt="@Alt">
+
+@code {
+    [Parameter]
+    public string? Url { get; set; }
+    [Parameter]
+    public string? Alt { get; set; }
+    [Parameter]
+    public string? Class { get; set; }
+}

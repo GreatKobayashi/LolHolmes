@@ -6,9 +6,9 @@ namespace LolHolmes.Infrastructure.Api
     {
         protected readonly RiotApi Api;
 
-        public RiotApiBase(string apiKey)
+        internal RiotApiBase()
         {
-            Api = new RiotApi(apiKey);
+            Api = new RiotApi(InfraSetting.ApiKey);
         }
     }
 }

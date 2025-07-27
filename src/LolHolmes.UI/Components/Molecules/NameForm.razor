@@ -1,0 +1,32 @@
+﻿
+<div class="input-group w-100">
+    <InputField PlaceHolder="RiotID" @bind-Input=Inputs.RiotId @bind-Input:after=OnValueChanged />
+    <span class="input-group-text">#</span>
+    <InputField PlaceHolder="Tag Line" Class="tagline-input" @bind-Input=Inputs.TagLine @bind-Input:after=OnValueChanged />
+</div>
+
+@code {
+    private static char _separator = '#';
+
+    [Parameter]
+    public NameFormInputs Inputs { get; set; } = new();
+    [Parameter]
+    public EventCallback<NameFormInputs> InputsChanged { get; set; }
+
+    private async Task OnValueChanged()
+    {
+        var index = Inputs.RiotId.IndexOf(_separator);
+        if (index >= 0)
+        {
+            Inputs.TagLine = Inputs.RiotId.Substring(index + 1);
+            Inputs.RiotId = Inputs.RiotId.Substring(0, index);
+        }
+        await InputsChanged.InvokeAsync(Inputs);
+    }
+
+    public class NameFormInputs
+    {
+        public string RiotId { get; set; } = "";
+        public string TagLine { get; set; } = "";
+    }
+}

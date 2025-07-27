@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RiotApiWrapper" Version="2.3.0" />
+    <PackageReference Include="CDragonWrapper" Version="2.1.0" />
+    <PackageReference Include="RiotApiWrapper" Version="2.5.2.3" />
   </ItemGroup>
 
   <ItemGroup>

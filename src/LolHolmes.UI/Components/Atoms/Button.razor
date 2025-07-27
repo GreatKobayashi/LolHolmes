@@ -1,4 +1,4 @@
-﻿<button class="btn @Class" @onclick="NotifyParent">@ChildContent</button>
+﻿<button class="btn @Class" @onclick="NotifyParent" disabled="@IsDisabled">@ChildContent</button>
 
 
 @code {
@@ -8,6 +8,8 @@
     public RenderFragment? ChildContent { get; set; }
     [Parameter]
     public EventCallback OnClick { get; set; }
+    [Parameter]
+    public bool IsDisabled { get; set; }
 
     private async Task NotifyParent()
     {

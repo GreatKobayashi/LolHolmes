@@ -1,0 +1,103 @@
+﻿@using LolHolmes.Domain.Entities
+@using LolHolmes.Domain.Exceptions
+@inject MainViewModel _viewModel;
+
+<Button Class="btn-primary my-2" OnClick="OnSearchButtonClick" IsDisabled=@(_isLimit || _isLoading)>
+    @if (_isLoading)
+    {
+        <Spinner Class="spinner-border-sm" />
+    }
+    else if (_names.Count == 0)
+    {
+        <Label>調査開始</Label>
+    }
+    else
+    {
+        <Label>もっと調べる</Label>
+    }
+</Button>
+
+@if (_names.Count > 0)
+{
+    <Label Class="mt-2">過去の名前</Label>
+    <ul>
+        @foreach (var name in _names)
+        {
+            if (string.IsNullOrEmpty(name.TagLine))
+            {
+                <li>@name.RiotId (サモナーネーム廃止前)</li>
+            }
+            else
+            {
+                <li>@name.RiotId #@name.TagLine</li>
+            }
+        }
+    </ul>
+}
+
+<div class="searchform-errormessage">
+    <Label>@_errorMessage</Label>
+</div>
+
+@if (_isLimit)
+{
+    <Label>これ以上は遡れません</Label>
+}
+
+@code {
+    private bool _isLoading = false;
+    private bool _isLimit = false;
+    private List<NameEntity> _names = new();
+    private string _errorMessage = "";
+
+    [Parameter]
+    public required AccountEntity Account { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _isLimit = false;
+        _names.Clear();
+    }
+
+    private async Task OnSearchButtonClick()
+    {
+        _isLoading = true;
+
+        try
+        {
+            var names = await _viewModel.SearchPriviousName(Account);
+
+            foreach (var entity in names)
+            {
+                if (_names.Find(x => x.RiotId == entity.RiotId) == null)
+                {
+                    _names.Add(entity);
+                }
+            }
+        }
+        catch (LolHolmesException ex)
+        {
+            switch (ex.ErrorCode)
+            {
+                case ErrorCode.NameSearchLimit:
+                    _isLimit = true;
+                    break;
+                case ErrorCode.OverRequestLimit:
+                    _errorMessage = "リクエスト上限を超えました。時間をおいて再度ご利用ください。";
+                    break;
+                case ErrorCode.ApiRequestFailed:
+                    _errorMessage = "何らかのAPIエラーが発生しました。時間をおいて再度利用しても発生する場合、管理人にお問い合わせください。";
+                    break;
+                default:
+                    _errorMessage = "予期せぬエラーが発生しました。管理人にお問い合わせください。";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            // TODO: LOG書いてアプリ落とす
+        }
+
+        _isLoading = false;
+    }
+}

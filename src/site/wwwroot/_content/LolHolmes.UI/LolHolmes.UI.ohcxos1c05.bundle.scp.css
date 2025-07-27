@@ -1,0 +1,39 @@
+/* _content/LolHolmes.UI/Components/Atoms/Bases/ImageBase.razor.rz.scp.css */
+img[b-hmhmc43zrp] {
+    object-fit: cover;
+}
+/* _content/LolHolmes.UI/Components/Atoms/Label.razor.rz.scp.css */
+p[b-m3rjnjrhip] {
+    font-size: 16px;
+    margin: 0px;
+}
+/* _content/LolHolmes.UI/Components/Atoms/RankEmblem.razor.rz.scp.css */
+[b-z242argkhb] .emblem {
+    margin-top: -5%;
+    margin-bottom: -5%;
+}
+/* _content/LolHolmes.UI/Components/Layouts/MainLayout.razor.rz.scp.css */
+.page[b-hltbfxgujt] {
+}
+
+.content[b-hltbfxgujt] {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    max-width: 1024px;
+}
+/* _content/LolHolmes.UI/Components/Molecules/NameForm.razor.rz.scp.css */
+[b-y1tbzn19bm] .tagline-input {
+    max-width: 100px;
+}
+/* _content/LolHolmes.UI/Components/Organisms/AccountSearch.razor.rz.scp.css */
+.searchform-errormessage[b-s5rifzoig6] {
+    height: 20px;
+    color: red;
+}
+/* _content/LolHolmes.UI/Components/Organisms/NameSearch.razor.rz.scp.css */
+.searchform-errormessage[b-ochcfdzejj] {
+    height: 20px;
+    color: red;
+}

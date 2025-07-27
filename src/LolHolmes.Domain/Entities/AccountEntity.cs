@@ -4,7 +4,15 @@ namespace LolHolmes.Domain.Entities
 {
     public class AccountEntity
     {
-        public AccountEntity(string puuId, Server server, string currentRiotId, string currentTagLine, int level, int profileIcon)
+        public AccountEntity(
+            string puuId,
+            Server server,
+            string currentRiotId,
+            string currentTagLine,
+            int level,
+            int profileIcon,
+            RankEntity? soloRank,
+            RankEntity? flexRank)
         {
             PuuId = puuId;
             Server = server;
@@ -12,6 +20,8 @@ namespace LolHolmes.Domain.Entities
             CurrentTagLine = currentTagLine;
             Level = level;
             ProfileIcon = profileIcon;
+            SoloRank = soloRank;
+            FlexRank = flexRank;
         }
 
         public string PuuId { get; private set; }
@@ -20,5 +30,7 @@ namespace LolHolmes.Domain.Entities
         public string CurrentTagLine { get; private set; }
         public int Level { get; private set; }
         public int ProfileIcon { get; private set; }
+        public RankEntity? SoloRank { get; private set; }
+        public RankEntity? FlexRank { get; private set; }
     }
 }

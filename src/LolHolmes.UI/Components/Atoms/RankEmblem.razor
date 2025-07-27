@@ -1,0 +1,19 @@
+﻿@using LolHolmes.Domain.Enums
+@using LolHolmes.Domain.Repositories;
+@inject IImageRepository _imageRepository;
+
+<div class="emblem">
+    <ImageBase Url="@_url" />
+</div>
+
+@code {
+    private string? _url;
+
+    [Parameter]
+    public Tier Tier { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _url = _imageRepository.GetRankEmblem(Tier).Url;
+    }
+}

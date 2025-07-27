@@ -1,0 +1,28 @@
+﻿@using LolHolmes.Domain.Entities
+
+<div class="d-flex flex-row">
+    <div class="col-3 mx-2">
+        <SummonerIcon IconId="Account.ProfileIcon" />
+    </div>
+    <div class="col-6 ms-2">
+        <Table Data="createTableData(Account)" />
+        <div class="mt-2">
+            <RankData Rank="Account.SoloRank" />
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public required AccountEntity Account { get; set; }
+
+    private string[,] createTableData(AccountEntity account)
+    {
+        return new string[,]
+        {
+            { "ID:", account.CurrentRiotId },
+            { "TagLine:", account.CurrentTagLine },
+            { "Level:", account.Level.ToString() },
+        };
+    }
+}

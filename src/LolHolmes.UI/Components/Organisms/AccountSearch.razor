@@ -1,0 +1,70 @@
+﻿@using LolHolmes.Domain.Entities
+@using LolHolmes.Domain.Exceptions
+@using static LolHolmes.UI.Components.Molecules.NameForm
+@inject MainViewModel _homeViewModel;
+
+<div class="col-9 mx-auto my-3">
+    <NameForm @bind-Inputs=_inputs />
+    <div class="searchform-errormessage">
+        <Label>@_errorMessage</Label>
+    </div>
+</div>
+<Label Class="ms-2">※クライアント等からコピーした値（例：someName#JP1）を直接RiotID欄にペーストしても大丈夫です！</Label>
+<Button Class="btn-primary my-2" OnClick="LoadAccountEntity" IsDisabled=_isLoading>
+    @if (_isLoading)
+    {
+        <Spinner Class="spinner-border-sm" />
+    }
+    else
+    {
+        <Label>アカウントチェック</Label>
+    }
+</Button>
+
+@code {
+    [Parameter]
+    public AccountEntity? Account { get; set; }
+    [Parameter]
+    public EventCallback<AccountEntity> AccountChanged { get; set; }
+
+    private NameFormInputs _inputs = new();
+    private string _errorMessage = "";
+    private bool _isLoading = false;
+
+    private async Task LoadAccountEntity()
+    {
+        _isLoading = true;
+        try
+        {
+            Account = await _homeViewModel.LoadAccount(_inputs.RiotId.Trim(), _inputs.TagLine.Trim());
+            await AccountChanged.InvokeAsync(Account);
+            _errorMessage = "";
+        }
+        catch (LolHolmesException ex)
+        {
+            switch (ex.ErrorCode)
+            {
+                case ErrorCode.InvalidRiotId:
+                    _errorMessage = "無効なRiotIDです。";
+                    break;
+                case ErrorCode.InvalidTagLine:
+                    _errorMessage = "無効なRiotIDです。";
+                    break;
+                case ErrorCode.AccountNotFound:
+                    _errorMessage = "アカウントが見つかりません。";
+                    break;
+                case ErrorCode.OverRequestLimit:
+                    _errorMessage = "リクエスト上限を超えました。時間をおいて再度ご利用ください。";
+                    break;
+                default:
+                    _errorMessage = "予期せぬエラーが発生しました。管理人にお問い合わせください。";
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            // TODO: LOG書いてアプリ落とす
+        }
+        _isLoading = false;
+    }
+}

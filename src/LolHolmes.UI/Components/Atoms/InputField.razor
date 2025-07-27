@@ -1,14 +1,30 @@
-﻿<input type="text" class="form-control" placeholder="@Placeholder" @bind="_input">
+﻿<input type="text" class="form-control @Class" placeholder="@Placeholder" @bind=Input @bind:after=OnValueChanged />
 
 
 @code {
-    private string _input = "";
+    // Unicode制御文字
+    private char[] _controllChars = new char[]
+    {
+        '\u2066', // LEFT-TO-RIGHT ISOLATE (LRI)
+        '\u2067', // RIGHT-TO-LEFT ISOLATE (RLI)
+        '\u2068', // FIRST STRONG ISOLATE (FSI)
+        '\u2069'  // POP DIRECTIONAL ISOLATE (PDI)
+    };
 
     [Parameter]
-    public string Placeholder { get; set; } = "";
+    public string? Placeholder { get; set; }
+    [Parameter]
+    public string? Class { get; set; }
 
-    public string GetInput()
+    [Parameter]
+    public string Input { get; set; } = "";
+    [Parameter]
+    public EventCallback<string> InputChanged { get; set; }
+
+    private async Task OnValueChanged()
     {
-        return _input;
+        // 制御文字の除去
+        Input = new string(Input.Where(c => !_controllChars.Contains(c)).ToArray());
+        await InputChanged.InvokeAsync(Input);
     }
 }

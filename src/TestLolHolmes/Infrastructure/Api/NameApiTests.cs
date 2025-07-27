@@ -1,6 +1,6 @@
 ﻿using LolHolmes.Domain.Entities;
 using LolHolmes.Domain.Enums;
-using LolHolmes.Infrastructure.Api;
+using LolHolmes.Infrastructure;
 
 namespace TestLolHolmes.Infrastructure.Api
 {
@@ -8,11 +8,12 @@ namespace TestLolHolmes.Infrastructure.Api
     public class NameApiTests
     {
         [TestMethod]
-        public async Task TestGetLastEntity()
+        public async Task TestGetEntities()
         {
-            var nameApi = new NameApi(TestUtility.ApiKey);
-            var account = new AccountEntity(TestUtility.Puuid, Server.Japan, "裸だったら何が悪い", "5444", 458, 1153);
-            var result = await nameApi.GetLastEntity(account, 40, 20);
+            var nameApi = Factories.CreateNameRepository();
+            var rank = new RankEntity(Tier.Bronze, 1, 1, 1, 1);
+            var account = new AccountEntity(TestUtility.Puuid, Server.Japan, "裸だったら何が悪い", "5444", 458, 1153, rank, rank);
+            var result = await nameApi.GetEntities(account, 1);
             Assert.IsNotNull(result);
             //Assert.IsInstanceOfType(result, typeof(Task<NameEntity>));
         }
