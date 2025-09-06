@@ -1,0 +1,6 @@
+.loading-icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1055;
+}

@@ -21,6 +21,11 @@
     }
 </Button>
 
+@if (_isLoading)
+{
+    <LoadingWindow />
+}
+
 @code {
     [Parameter]
     public AccountEntity? Account { get; set; }
@@ -34,11 +39,11 @@
     private async Task LoadAccountEntity()
     {
         _isLoading = true;
+        _errorMessage = "";
         try
         {
             Account = await _homeViewModel.LoadAccount(_inputs.RiotId.Trim(), _inputs.TagLine.Trim());
             await AccountChanged.InvokeAsync(Account);
-            _errorMessage = "";
         }
         catch (LolHolmesException ex)
         {

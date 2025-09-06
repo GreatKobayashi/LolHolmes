@@ -1,4 +1,5 @@
-﻿using LolHolmes.Domain.Entities;
+﻿using LolHolmes.Domain;
+using LolHolmes.Domain.Entities;
 using LolHolmes.Domain.Enums;
 using LolHolmes.Domain.Exceptions;
 using LolHolmes.Domain.Repositories;
@@ -31,6 +32,8 @@ namespace LolHolmes.UI.Pages.ViewModels
                 throw new AccountSearchException(ErrorCode.InvalidTagLine);
             }
 
+            await Task.Delay(Shared.ActionCoolDownMS);
+
             var account = await _accountRepository.GetEntity(Server.Japan, riotId, tagLine);
 
             // 初期化処理
@@ -46,6 +49,8 @@ namespace LolHolmes.UI.Pages.ViewModels
             {
                 throw new NameSearchException(ErrorCode.NameSearchLimit);
             }
+
+            await Task.Delay(Shared.ActionCoolDownMS);
 
             var page = _startPage;
             var names = new List<NameEntity>();

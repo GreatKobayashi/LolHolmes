@@ -2,20 +2,27 @@
 @using LolHolmes.Domain.Enums
 
 <Label>ランク</Label>
-<div class="d-flex flex-row">
-    <div class="col-3">
-        <RankEmblem Tier="Rank.Tier" />
+@if (Rank == null)
+{
+    <Label>Unranked</Label>
+}
+else
+{
+    <div class="d-flex flex-row">
+        <div class="col-3">
+            <RankEmblem Tier="Rank.Tier" />
+        </div>
+        <div class="col-6 ms-5">
+            <Label Class="mt-2">@Rank.Tier @(EliteTiers.Contains(Rank.Tier) ? string.Empty : Rank.Division)</Label>
+            <Label>@Rank.Point LP</Label>
+            <Label Class="mt-2">@Rank.Wins 勝 @Rank.Losses 敗</Label>
+        </div>
     </div>
-    <div class="col-6 ms-5">
-        <Label Class="mt-2">@Rank.Tier @(EliteTiers.Contains(Rank.Tier) ? string.Empty : Rank.Division)</Label>
-        <Label>@Rank.Point LP</Label>
-        <Label Class="mt-2">@Rank.Wins 勝 @Rank.Losses 敗</Label>
-    </div>
-</div>
+}
 
 @code {
     [Parameter]
-    public required RankEntity Rank { get; set; }
+    public required RankEntity? Rank { get; set; }
 
     private static List<Tier> EliteTiers = new()
     {

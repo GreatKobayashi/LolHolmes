@@ -1,15 +1,8 @@
 ﻿@inject IJSRuntime JSRuntime
 
-<script src="js/modalHelper.js"></script>
+<script src="@Assets["assets/js/modalHelper.js"]"></script>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-</button>
-<button @onclick="() => ShowModal()">C#から開く</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" @key="@_id" id="@_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,11 +20,56 @@
     </div>
 </div>
 
-
-
 @code {
-    async Task ShowModal()
+    [Parameter]
+    public bool IsVisible { get; set; }
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private static int _modals = 0;
+
+    private string _id = "";
+    private bool _isVisible;
+    private bool _isJSLoaded;
+
+    protected override async Task OnParametersSetAsync()
     {
-        await JSRuntime.InvokeVoidAsync("showModal", "staticBackdrop");
+        if (IsVisible)
+        {
+            await ShowModal();
+        }
+        else
+        {
+            await HideModal();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        _id = $"modalDialog{++_modals}";
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isJSLoaded = true;
+        }
+    }
+
+    private async Task ShowModal()
+    {
+        if (_isJSLoaded)
+        {
+            await JSRuntime.InvokeVoidAsync("showModal", _id);
+        }
+    }
+
+    private async Task HideModal()
+    {
+        if (_isJSLoaded)
+        {
+            await JSRuntime.InvokeVoidAsync("hideModal", _id);
+        }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LolHolmes.Domain.Exceptions
+﻿namespace LolHolmes.Domain.Exceptions
 {
     public class NameSearchException : LolHolmesException
     {
