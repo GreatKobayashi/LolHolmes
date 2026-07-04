@@ -3,3 +3,5 @@ bin/
 obj/
 coveragereport/
 TestResults/
+*.user
+*.pem
